@@ -1,6 +1,6 @@
 # OauthMockServer
 
-**TODO: Add description**
+**Server for mocking OAuth/SSO requests using predefined responses**
 
 ## Installation
 
@@ -15,7 +15,13 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/oauth_mock_server](https://hexdocs.pm/oauth_mock_server).
+Otherwise:
 
+```elixir
+def deps do
+  [
+    {:oauth_mock_server,
+      git: "https://github.com/DefactoSoftware/oauth_mock_server.git", only: [:dev. :test]}
+  ]
+end
+```
