@@ -1,6 +1,7 @@
 # OauthMockServer
 
 **Server for mocking OAuth/SSO requests using predefined responses**
+
 Currently, only mocks ADFS SSO responses with barebones data
 
 Supported endpoint:
