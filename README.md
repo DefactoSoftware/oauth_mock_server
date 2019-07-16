@@ -7,7 +7,7 @@ Currently, only mocks ADFS SSO responses with barebones data
 Supported endpoint:
 - `/adfs/metadata.xml`: Returns a barebones metadata.xml with only the public signing certificate node present
 - `/adfs/oauth2/authorize`: Returns an empty `200` response
-- `/adfs/oauth2/token?code={value}`: Returns an encoded `{"sub" => "value"}` claim in a JWT, where the value is euqal to the `code` param
+- `/adfs/oauth2/token?code={value}`: Returns an encoded `{"sub" => "value"}` claim in a JWT, where "value" is equal to the value of the `code` param
 
 Claims can be decoded with the public signing certificate
 
