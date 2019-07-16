@@ -10,7 +10,7 @@ defmodule OauthMockServer do
       Plug.Cowboy.child_spec(
         scheme: :http,
         plug: OauthMockServer.Router,
-        options: [port: Application.get_env(:oauth_mock_server, :port)]
+        options: [port: Application.get_env(:oauth_mock_server, :port) || 54_345]
       )
     ]
 
