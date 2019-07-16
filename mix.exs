@@ -5,10 +5,16 @@ defmodule OauthMockServer.MixProject do
     [
       app: :oauth_mock_server,
       version: "0.1.0",
-      elixir: "~> 1.8",
+      elixir: "~> 1.8.0",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      # Docs
+      name: "OauthMockServer",
+      source_url: "https://github.com/DefactoSoftware/oauth_mock_server",
+      homepage_url: "https://github.com/DefactoSoftware/oauth_mock_server",
+      # The main page in the docs
+      docs: [main: "readme", extras: ["README.md"]]
     ]
   end
 

@@ -3,6 +3,8 @@ defmodule OauthMockServer do
   Documentation for OauthMockServer.
   """
 
+  use Application
+
   def start(_type, _args), do: Supervisor.start_link([], strategy: :one_for_one)
 
   def start_link(options) do
