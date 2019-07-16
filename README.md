@@ -29,7 +29,7 @@ Otherwise:
 def deps do
   [
     {:oauth_mock_server,
-      git: "https://github.com/DefactoSoftware/oauth_mock_server.git", only: [:dev. :test]}
+      git: "https://github.com/DefactoSoftware/oauth_mock_server.git", only: [:dev, :test]}
   ]
 end
 ```
