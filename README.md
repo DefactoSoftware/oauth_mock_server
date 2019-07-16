@@ -11,6 +11,13 @@ Supported endpoint:
 
 Claims can be decoded with the public signing certificate
 
+## Configuration
+
+```elixir
+# Run the server on port 54345
+config :oauth_mock_server, port: 54345
+```
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
