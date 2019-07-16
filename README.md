@@ -14,8 +14,8 @@ Claims can be decoded with the public signing certificate
 ## Configuration
 
 ```elixir
-# Run the server on port 54345
-config :oauth_mock_server, port: 54345
+# Run the server on port 54345, add to startup children
+{OauthMockServer, port: 54345}
 ```
 
 ## Installation
