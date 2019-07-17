@@ -22,5 +22,6 @@ defmodule OauthMockServer.Router do
   # ADFS
   get("/adfs/metadata.xml", do: Adfs.metadata(conn))
   get("/adfs/oauth2/authorize", do: Adfs.authorize(conn))
+  options("/adfs/oauth2/authorize", do: Adfs.authorize(conn))
   post("/adfs/oauth2/token", do: Adfs.token(conn))
 end

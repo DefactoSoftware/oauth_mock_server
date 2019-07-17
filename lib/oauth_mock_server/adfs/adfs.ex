@@ -3,8 +3,9 @@ defmodule OauthMockServer.Adfs do
     A server that simulates ADFS responses.
   """
 
+  use OauthMockServer.Conn
+
   alias OauthMockServer.Adfs.TokenHelper
-  alias Plug.Conn
 
   def valid_metadata,
     do: """
@@ -37,14 +38,28 @@ defmodule OauthMockServer.Adfs do
     </EntityDescriptor>
     """
 
-  def metadata(conn), do: Conn.send_resp(conn, 200, valid_metadata())
-  def authorize(conn), do: Conn.send_resp(conn, 200, "")
+  def metadata(conn), do: send_resp(conn, 200, valid_metadata())
 
-  def token(%Conn{params: %{"code" => "error"}} = conn), do: Conn.send_resp(conn, 503, "")
-  def token(%Conn{params: %{"code" => user_name}} = conn), do: token_response(conn, user_name)
+  def authorize(%Conn{params: %{"redirect_uri" => redirect_uri}} = conn) do
+    user =
+      case conn.params do
+        %{"user" => user} -> user
+        %{"client_id" => user} -> user
+        _ -> "john_doe"
+      end
+
+    redirect(conn, "#{redirect_uri}?code=#{user}")
+  end
+
+  def authorize(conn), do: send_resp(conn, 200, "")
+
+  def token(%Conn{params: %{"code" => "error"}} = conn), do: send_resp(conn, 503, "")
+
+  def token(%Conn{params: %{"code" => user_name}} = conn),
+    do: token_response(conn, user_name)
 
   defp token_response(conn, subject) do
     access_token = TokenHelper.create_access_token(%{sub: subject})
-    Conn.send_resp(conn, 200, Jason.encode!(%{access_token: access_token}))
+    send_resp(conn, 200, Jason.encode!(%{access_token: access_token}))
   end
 end
