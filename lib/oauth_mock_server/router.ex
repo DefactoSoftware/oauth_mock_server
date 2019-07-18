@@ -7,7 +7,7 @@ defmodule OauthMockServer.Router do
 
   alias OauthMockServer.Adfs
 
-  plug(Plug.Logger, log: :info)
+  plug(OauthMockServer.RequestLogger)
 
   plug(Plug.Parsers,
     parsers: [:urlencoded, :json],
