@@ -2,6 +2,9 @@ defmodule OauthMockServer.CodeReloader do
   @moduledoc "Hot reloading of code in the lib folder"
 
   use GenServer
+
+  require Logger
+
   alias Mix.Tasks.Compile.Elixir, as: ExCompile
 
   def start_link do
@@ -24,6 +27,7 @@ defmodule OauthMockServer.CodeReloader do
   defp handle_path(path, current_mtime, current_mtime), do: {path, current_mtime}
 
   defp handle_path(path, current_mtime, _) do
+    Logger.info("Files changed on disk. Recompiling...")
     ExCompile.run(["--ignore-module-conflict"])
     {path, current_mtime}
   end
