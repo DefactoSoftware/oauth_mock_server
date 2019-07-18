@@ -13,9 +13,22 @@ defmodule OauthMockServer.AdfsTest do
     assert response(conn, 200) == Adfs.valid_metadata()
   end
 
-  @tag path: "/adfs/oauth2/authorize"
-  test "returns a dummy 200 response when authorizing", %{conn: conn} do
-    assert response(conn, 200) == ""
+  @tag path: "/adfs/oauth2/authorize?redirect_uri=example.com"
+  test "redirect to redirect_uri when authorizing", %{conn: conn} do
+    assert Plug.Conn.get_resp_header(conn, "location") == ["example.com?code=john_doe"]
+    assert response(conn, 302)
+  end
+
+  @tag path: "/adfs/oauth2/authorize?redirect_uri=example.com&user=some_user"
+  test "redirect with code based on user param if present", %{conn: conn} do
+    assert Plug.Conn.get_resp_header(conn, "location") == ["example.com?code=some_user"]
+    assert response(conn, 302)
+  end
+
+  @tag path: "/adfs/oauth2/authorize?redirect_uri=example.com&client_id=some_client"
+  test "redirect with code based on client_id param if present", %{conn: conn} do
+    assert Plug.Conn.get_resp_header(conn, "location") == ["example.com?code=some_client"]
+    assert response(conn, 302)
   end
 
   @tag path: "/adfs/oauth2/token?code=some_user", method: :post
