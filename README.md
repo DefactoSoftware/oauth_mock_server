@@ -7,7 +7,10 @@ Currently, only mocks ADFS SSO responses with barebones data
 Supported endpoint:
 - `/adfs/metadata.xml`: Returns a barebones metadata.xml with only the public signing certificate node present
 - `/adfs/oauth2/authorize`: Returns an empty `200` response
+- `/adfs/oauth2/authorize?redirect_uri=URI`: Redirects to the callback url, with an authorization code attached
 - `/adfs/oauth2/token?code={value}`: Returns an encoded `{"sub" => "value"}` claim in a JWT, where "value" is equal to the value of the `code` param
+
+Add the param `user=value` or `client_id=value` to the authorize endpoint to use that value as the authorization code when redirecting.
 
 Claims can be decoded with the public signing certificate
 
