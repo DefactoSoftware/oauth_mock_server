@@ -1,4 +1,6 @@
 defmodule OauthMockServer.ConnHelper do
+  @moduledoc "Helper functions for testing with conn"
+
   use Plug.Test
 
   alias OauthMockServer.Router

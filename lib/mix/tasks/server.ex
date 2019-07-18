@@ -4,6 +4,8 @@ defmodule Mix.Tasks.Server do
 
   use Mix.Task
 
+  alias Mix.Tasks.Run, as: MixTask
+
   @doc false
   def run(args) do
     port = Application.get_env(:oauth_mock_server, :port, 54_345)
@@ -14,7 +16,9 @@ defmodule Mix.Tasks.Server do
     OauthMockServer.start_link(port: port)
     Mix.shell().info("OauthMockServer started at port #{port}")
 
-    Mix.Tasks.Run.run(run_args() ++ args)
+    OauthMockServer.CodeReloader.start_link()
+
+    MixTask.run(run_args() ++ args)
   end
 
   defp run_args do

@@ -1,4 +1,6 @@
 defmodule OauthMockServer.RequestLogger do
+  @moduledoc "Logs web requests with path, method, params and redirections"
+
   require Logger
 
   @behaviour Plug
