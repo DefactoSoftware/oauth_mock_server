@@ -11,10 +11,15 @@ defmodule OauthMockServer.MixProject do
       deps: deps(),
       # Docs
       name: "OauthMockServer",
-      source_url: "https://github.com/DefactoSoftware/oauth_mock_server",
-      homepage_url: "https://github.com/DefactoSoftware/oauth_mock_server",
-      maintainers: ["Kuret"],
-      licenses: ["MIT"],
+      description: "Simple server that returns dummy responses for testing OAuth, OpenID and SSO",
+      package: [
+        links: %{
+          "GitHub" => "https://github.com/DefactoSoftware/oauth_mock_server",
+          "Defacto Software" => "https://www.defacto.nl"
+        },
+        maintainers: ["Kuret"],
+        licenses: ["MIT"]
+      ],
       # The main page in the docs
       docs: [main: "readme", extras: ["README.md"]]
     ]
@@ -36,6 +41,7 @@ defmodule OauthMockServer.MixProject do
   defp deps do
     [
       {:credo, "~> 1.0", only: [:dev, :test]},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:jason, "~> 1.1"},
       {:joken, "~> 1.5.0"},
       {:plug_cowboy, "~> 2.0"},
