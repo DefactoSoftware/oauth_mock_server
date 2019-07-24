@@ -13,6 +13,8 @@ defmodule OauthMockServer.MixProject do
       name: "OauthMockServer",
       source_url: "https://github.com/DefactoSoftware/oauth_mock_server",
       homepage_url: "https://github.com/DefactoSoftware/oauth_mock_server",
+      maintainers: ["Kuret"],
+      licenses: ["MIT"],
       # The main page in the docs
       docs: [main: "readme", extras: ["README.md"]]
     ]
