@@ -27,6 +27,9 @@ defmodule OauthMockServer.Adfs.TokenHelper do
     end
   end
 
-  defp public_key, do: "priv/keys/adfs.cer" |> Path.expand(File.cwd!()) |> File.read!()
-  defp private_key, do: "priv/keys/adfs.key" |> Path.expand(File.cwd!()) |> File.read!()
+  defp public_key,
+    do: "keys/adfs.cer" |> Path.expand(:code.priv_dir(:oauth_mock_server)) |> File.read!()
+
+  defp private_key,
+    do: "keys/adfs.key" |> Path.expand(:code.priv_dir(:oauth_mock_server)) |> File.read!()
 end

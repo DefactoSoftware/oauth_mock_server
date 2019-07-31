@@ -32,6 +32,9 @@ defmodule OauthMockServer.Adfs do
     send_resp(conn, 200, Jason.encode!(%{access_token: access_token}))
   end
 
-  defp adfs_metadata,
-    do: "priv/keys/adfs_metadata.xml" |> Path.expand(File.cwd!()) |> File.read!()
+  defp adfs_metadata do
+    "keys/adfs_metadata.xml"
+    |> Path.expand(:code.priv_dir(:oauth_mock_server))
+    |> File.read!()
+  end
 end
