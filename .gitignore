@@ -27,8 +27,5 @@ cover/
 # variables.
 /config/*.secret.exs
 
-# Certificates
-priv/keys/*
-
 # Iex startup
 .iex.exs

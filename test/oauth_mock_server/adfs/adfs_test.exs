@@ -3,14 +3,13 @@ defmodule OauthMockServer.AdfsTest do
 
   import OauthMockServer.ConnHelper
 
-  alias OauthMockServer.Adfs
   alias OauthMockServer.Adfs.TokenHelper
 
   setup :setup_conn
 
   @tag path: "/adfs/metadata.xml"
   test "returns dummy metadata.xml", %{conn: conn} do
-    assert response(conn, 200) == Adfs.valid_metadata()
+    assert response(conn, 200) == adfs_metadata()
   end
 
   @tag path: "/adfs/oauth2/authorize?redirect_uri=example.com"
@@ -42,4 +41,7 @@ defmodule OauthMockServer.AdfsTest do
   test "returns an error", %{conn: conn} do
     assert response(conn, 503) == ""
   end
+
+  defp adfs_metadata,
+    do: "priv/keys/adfs_metadata.xml" |> Path.expand(File.cwd!()) |> File.read!()
 end
