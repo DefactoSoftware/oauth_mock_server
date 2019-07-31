@@ -6,6 +6,7 @@ defmodule OauthMockServer.Router do
   use Plug.Router
 
   alias OauthMockServer.Adfs
+  alias OauthMockServer.Capp11
 
   plug(OauthMockServer.RequestLogger)
 
@@ -26,4 +27,10 @@ defmodule OauthMockServer.Router do
   get("/adfs/oauth2/authorize", do: Adfs.authorize(conn))
   options("/adfs/oauth2/authorize", do: Adfs.authorize(conn))
   post("/adfs/oauth2/token", do: Adfs.token(conn))
+
+  # CAPP11
+  get("/capp11/oauth2/authorize", do: Capp11.authorize(conn))
+  options("/capp11/oauth2/authorize", do: Capp11.authorize(conn))
+  post("/capp11/oauth2/token", do: Capp11.token(conn))
+  get("/capp11/api/v6/accounts/me", do: Capp11.user_info(conn))
 end
