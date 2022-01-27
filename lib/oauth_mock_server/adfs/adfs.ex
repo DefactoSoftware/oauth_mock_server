@@ -28,7 +28,7 @@ defmodule OauthMockServer.Adfs do
     do: token_response(conn, user_name)
 
   defp token_response(conn, subject) do
-    access_token = TokenHelper.create_access_token(%{sub: subject})
+    access_token = TokenHelper.create_access_token(%{"sub" => subject})
     send_resp(conn, 200, Jason.encode!(%{access_token: access_token}))
   end
 

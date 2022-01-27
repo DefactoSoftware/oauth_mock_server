@@ -6,37 +6,32 @@ defmodule OauthMockServer.Adfs.TokenHelperTest do
   test "encodes map data into a token" do
     token = TokenHelper.create_access_token(%{foo: "bar"})
 
-    assert %Joken.Token{} = Joken.token(token)
+    assert %{"iss" => "Joken", "foo" => "bar"} = TokenHelper.decode_access_token(token)
   end
 
-  test "encodes string data into a token" do
-    token = TokenHelper.create_access_token("foo")
-
-    assert %Joken.Token{} = Joken.token(token)
-  end
-
-  test "raises when data is not a map or string" do
+  test "raises when data is not a map" do
     assert_raise FunctionClauseError, fn ->
-      TokenHelper.create_access_token(:data)
+      TokenHelper.create_access_token(:atom_data)
+    end
+
+    assert_raise FunctionClauseError, fn ->
+      TokenHelper.create_access_token("string_data")
     end
   end
 
   test "decodes a valid token" do
-    assert %Joken.Token{claims: %{"foo" => "bar"}} =
+    assert %{"iss" => "Joken", "foo" => "bar"} =
              %{foo: "bar"}
              |> TokenHelper.create_access_token()
              |> TokenHelper.decode_access_token()
   end
 
-  test "empty claims in valid token generated without json data" do
-    assert %Joken.Token{claims: %{}} =
-             "foo"
-             |> TokenHelper.create_access_token()
-             |> TokenHelper.decode_access_token()
+  test "empty claims in valid token generated without claims" do
+    assert %{"iss" => "Joken"} =
+             TokenHelper.create_access_token() |> TokenHelper.decode_access_token()
   end
 
   test "error decoding an invalid token" do
-    assert %Joken.Token{claims: %{}, error: "Invalid signature"} =
-             TokenHelper.decode_access_token("1234")
+    assert {:error, :signature_error} == TokenHelper.decode_access_token("1234")
   end
 end

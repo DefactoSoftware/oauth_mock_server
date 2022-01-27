@@ -42,8 +42,8 @@ defmodule OauthMockServer.MixProject do
     [
       {:credo, "~> 1.0", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:jason, "~> 1.1"},
-      {:joken, "~> 1.5.0"},
+      {:jason, "~> 1.2"},
+      {:joken, "~> 2.4"},
       {:plug_cowboy, "~> 2.0"},
       {:poison, "~> 3.1"}
     ]
