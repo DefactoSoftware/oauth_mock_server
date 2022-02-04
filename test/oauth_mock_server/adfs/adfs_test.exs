@@ -32,9 +32,10 @@ defmodule OauthMockServer.AdfsTest do
 
   @tag path: "/adfs/oauth2/token?code=some_user", method: :post
   test "returns an access_token using the code as subject", %{conn: conn} do
-    access_token = TokenHelper.create_access_token(%{sub: "some_user"})
+    assert %{"access_token" => access_token} = conn |> response(200) |> Jason.decode!()
 
-    assert response(conn, 200) == Jason.encode!(%{access_token: access_token})
+    assert %{"iss" => "Joken", "sub" => "some_user"} =
+             TokenHelper.decode_access_token(access_token)
   end
 
   @tag path: "/adfs/oauth2/token?code=error", method: :post

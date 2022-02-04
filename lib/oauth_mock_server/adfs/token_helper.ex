@@ -3,27 +3,19 @@ defmodule OauthMockServer.Adfs.TokenHelper do
   Helper for generating, signing and decrypting ADFS tokens for testing purposes
   """
 
-  alias Joken
-  alias JOSE.JWK
+  import Joken.Config
 
-  def create_access_token(claims) do
-    with [pem_key_data] <- private_key() |> :public_key.pem_decode(),
-         %Joken.Signer{} = signer <-
-           pem_key_data |> :public_key.pem_entry_decode() |> JWK.from_key() |> Joken.rs256() do
-      claims
-      |> Joken.token()
-      |> Joken.with_signer(signer)
-      |> Joken.sign()
-      |> Joken.get_compact()
+  def create_access_token(claims \\ nil) do
+    with signer <- Joken.Signer.create("RS256", %{"pem" => private_key()}),
+         {:ok, token, _} <- Joken.generate_and_sign(default_claims(), claims, signer) do
+      token
     end
   end
 
   def decode_access_token(token) do
-    with %Joken.Signer{} = signer <- public_key() |> JWK.from_pem() |> Joken.rs256() do
-      token
-      |> Joken.token()
-      |> Joken.with_signer(signer)
-      |> Joken.verify()
+    with signer <- Joken.Signer.create("RS256", %{"pem" => public_key()}),
+         {:ok, claims} <- Joken.verify_and_validate(default_claims(), token, signer) do
+      claims
     end
   end
 
